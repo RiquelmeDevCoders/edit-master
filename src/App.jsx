@@ -120,20 +120,17 @@ const StarField = () => {
   return <canvas ref={canvasRef} className="fixed inset-0 z-0 pointer-events-none opacity-40" />;
 };
 
-// --- COMPONENTE DE ÁUDIO CORRIGIDO ---
+// --- COMPONENTE DE ÁUDIO ---
 const AudioPlayer = ({ name, role, quote, src }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(null);
 
   useEffect(() => {
-    // Cria a instância de áudio
     audioRef.current = new Audio(src);
 
-    // Listener para quando o áudio terminar
     const handleEnded = () => setIsPlaying(false);
     audioRef.current.addEventListener('ended', handleEnded);
 
-    // Cleanup: Pausa e remove listeners ao desmontar ou trocar a source
     return () => {
       if (audioRef.current) {
         audioRef.current.pause();
@@ -156,28 +153,28 @@ const AudioPlayer = ({ name, role, quote, src }) => {
   return (
     <div className="bg-white/5 border border-white/10 rounded-2xl p-6 relative overflow-hidden group hover:border-cyan-500/30 transition-all duration-300">
       <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 rounded-full blur-3xl -z-10 group-hover:bg-cyan-500/10 transition-all"></div>
-      
+
       <div className="flex items-center gap-4 mb-4">
-        <button 
+        <button
           onClick={togglePlay}
           className="w-12 h-12 rounded-full bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 hover:bg-cyan-500 hover:text-black transition-all flex-shrink-0 cursor-pointer z-20"
         >
           {isPlaying ? <Pause size={20} fill="currentColor" /> : <Play size={20} fill="currentColor" />}
         </button>
-        
+
         <div className="flex-1 flex items-center gap-1 h-8">
           {[...Array(12)].map((_, i) => (
             <motion.div
               key={i}
               className="w-1 bg-gray-600 rounded-full"
-              animate={{ 
+              animate={{
                 height: isPlaying ? [10, 20 + Math.random() * 15, 10] : 4,
                 backgroundColor: isPlaying ? "#22d3ee" : "#4b5563"
               }}
-              transition={{ 
-                duration: 0.5, 
-                repeat: Infinity, 
-                delay: i * 0.1 
+              transition={{
+                duration: 0.5,
+                repeat: Infinity,
+                delay: i * 0.1
               }}
             />
           ))}
@@ -209,7 +206,8 @@ const Navbar = () => {
   return (
     <nav className={cn(
       "fixed top-0 w-full z-50 transition-all duration-300 border-b border-transparent",
-      scrolled ? "bg-[#030014]/80 backdrop-blur-md border-cyan-900/20 py-4" : "bg-transparent py-6"
+      // AJUSTE COR: Removido #030014 (roxo) para #020617 (slate/blue)
+      scrolled ? "bg-[#020617]/80 backdrop-blur-md border-cyan-900/20 py-4" : "bg-transparent py-6"
     )}>
       <div className="container mx-auto px-6 flex justify-between items-center">
         <div className="flex items-center gap-2">
@@ -294,7 +292,7 @@ const Hero = () => {
               <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-cyan-500/20 transition-all border border-transparent group-hover:border-cyan-500/50">
                 <Play size={12} fill="currentColor" />
               </div>
-              Ver Processo
+              Ver Portifólio
             </button>
           </div>
         </motion.div>
@@ -325,14 +323,14 @@ const About = () => {
             {/* Imagem Substituída por Placeholder Estilizado */}
             <div className="relative aspect-[4/5] rounded-2xl overflow-hidden border border-white/10 group">
               <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 to-black/80 z-0"></div>
-              
+
               <div className="absolute inset-0 w-full h-full bg-gray-900 flex items-center justify-center z-10 shadow-[inset_0_0_100px_rgba(0,0,0,0.8)]">
-                  <img 
-                    src={aboutImage} 
-                    alt="Sobre a Edit Master"
-                    className="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 transition-all duration-700"
-                  />
-                  <div className="absolute inset-0 border-[1px] border-cyan-500/30 rounded-2xl shadow-[0_0_30px_rgba(6,182,212,0.2)] pointer-events-none"></div>
+                <img
+                  src={aboutImage}
+                  alt="Sobre a Edit Master"
+                  className="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 transition-all duration-700"
+                />
+                <div className="absolute inset-0 border-[1px] border-cyan-500/30 rounded-2xl shadow-[0_0_30px_rgba(6,182,212,0.2)] pointer-events-none"></div>
               </div>
             </div>
           </motion.div>
@@ -347,10 +345,10 @@ const About = () => {
 
             <div className="space-y-6 text-gray-300 leading-relaxed font-light">
               <p>
-                A Edit Master nasceu com uma missão clara: elevar o padrão do conteúdo digital. Ao longo dos últimos anos, construímos nossa própria estrutura de produção e aperfeiçoamos um mecanismo exclusivo que guia todo o nosso processo — desde a análise do público até a criação estratégica de cada peça.
+                A Edit Master nasceu com uma missão clara: elevar o padrão do conteúdo digital. Ao longo dos últimos anos, construímos nossa própria estrutura de produção e aperfeiçoamos um mecanismo exclusivo que guia todo o nosso processo desde a análise do público até a criação estratégica de cada peça.
               </p>
               <p>
-                Já produzimos mais de 500 vídeos a cada ciclo de poucos meses, o que nos deu domínio total sobre o que realmente funciona no digital: ritmo, linguagem, estética, percepção e conversão. Não trabalhamos com achismo — trabalhamos com método, constância e profundidade.
+                Já produzimos mais de 500 vídeos a cada ciclo de poucos meses, o que nos deu domínio total sobre o que realmente funciona no digital ritmo, linguagem, estética, percepção e conversão. Não trabalhamos com achismo trabalhamos com método, constância e profundidade.
               </p>
               <p>
                 Nosso time é formado por profissionais especializados, focados em entender a essência de cada marca e transformar isso em conteúdo que constrói posicionamento, reforça autoridade e, principalmente, gera resultado real.
@@ -419,8 +417,8 @@ const MotionShowcase = () => {
                 onClick={() => setActiveTab(tab.id)}
                 className={cn(
                   "px-6 py-2 rounded-full text-sm font-semibold transition-all duration-300 border border-transparent",
-                  activeTab === tab.id 
-                    ? "bg-cyan-600 text-white shadow-[0_0_15px_rgba(8,145,178,0.4)] border-cyan-400/50" 
+                  activeTab === tab.id
+                    ? "bg-cyan-600 text-white shadow-[0_0_15px_rgba(8,145,178,0.4)] border-cyan-400/50"
                     : "bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 border-white/5"
                 )}
               >
@@ -430,7 +428,7 @@ const MotionShowcase = () => {
           </div>
         </div>
 
-        {/* Grid responsivo corrigido: 2 Colunas em telas médias para vídeos maiores */}
+        {/* Grid responsivo: 2 Colunas em telas médias para vídeos maiores */}
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 max-w-7xl mx-auto">
           <AnimatePresence mode='wait'>
             {motions[activeTab] ? motions[activeTab].map((item, index) => (
@@ -440,18 +438,19 @@ const MotionShowcase = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.3, delay: index * 0.1 }}
-                className="group relative aspect-video rounded-2xl overflow-hidden border border-white/10 bg-gray-900/50 shadow-2xl hover:border-cyan-500/30 transition-colors"
+                // AJUSTE VIDEO: Adicionado bg-black para evitar fundo roxo/estranho no letterbox
+                className="group relative aspect-video rounded-2xl overflow-hidden border border-white/10 bg-black shadow-2xl hover:border-cyan-500/30 transition-colors"
               >
                 <video
                   src={item.video}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain"
                   controls
                   playsInline
                   preload="metadata"
                 >
                   Seu navegador não suporta o elemento de vídeo.
                 </video>
-                <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/90 to-transparent pointer-events-none">
+                <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/90 to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <h3 className="text-white font-medium text-lg">{item.title}</h3>
                 </div>
               </motion.div>
@@ -464,34 +463,33 @@ const MotionShowcase = () => {
 };
 
 const ClientFeedback = () => {
-  // Ajuste dos caminhos: Arquivos públicos devem ser referenciados a partir da raiz
-  // Certifique-se de que a pasta 'audios' está dentro da pasta 'public' do projeto.
   const feedbacks = [
     {
       id: 1,
       name: "Cliente 1",
       role: "Feedback",
-      quote: "...O aúdio ficou sincronizado beleza, bem clean mesmo...",
-      audio: '/audios/feedback1.mp3'  
+      quote: "Cara, muito bom o atendimento da Edit Master...",
+      audio: '/audios/feedback1.mp3'
     },
     {
       id: 2,
       name: "Cliente 2",
       role: "Feedback",
-      quote: "...Surpreendeu as expectativas. Agora vamos vender!",
-      audio: '/audios/feedback2.mp3' 
+      quote: "...Tô passando aqui para te agradecer pelos criativos... Cara, assim, sensacionais!",
+      audio: '/audios/feedback2.mp3'
     },
     {
       id: 3,
       name: "Cliente 3",
       role: "Feedback",
       quote: "Serviço de ultra qualidade...Agora estou pegando um por dia",
-      audio: '/audios/feedback3.mp3' 
+      audio: '/audios/feedback3.mp3'
     }
   ];
 
   return (
-    <section id="feedbacks" className="py-24 bg-gradient-to-b from-[#02000d] to-[#040818]">
+    // AJUSTE COR: Alterado o gradient final para #0f172a para evitar tom roxo
+    <section id="feedbacks" className="py-24 bg-gradient-to-b from-[#02000d] to-[#0f172a]">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/20 bg-cyan-900/10 backdrop-blur-sm mb-4">
@@ -513,8 +511,8 @@ const ClientFeedback = () => {
               viewport={{ once: true }}
               transition={{ delay: idx * 0.1 }}
             >
-              <AudioPlayer 
-                src={feedback.audio}  
+              <AudioPlayer
+                src={feedback.audio}
                 name={feedback.name}
                 role={feedback.role}
                 quote={feedback.quote}
@@ -569,7 +567,8 @@ const Services = () => {
   ];
 
   return (
-    <section id="servicos" className="py-24 relative overflow-hidden bg-[#030014]">
+    // AJUSTE COR: Alterado de #030014 para #020617 (slate escuro/preto)
+    <section id="servicos" className="py-24 relative overflow-hidden bg-[#020617]">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-cyan-600/5 blur-[100px] -z-10 rounded-full"></div>
 
       <div className="container mx-auto px-6">
@@ -649,7 +648,8 @@ const FAQ = () => {
   ];
 
   return (
-    <section id="faq" className="py-24 relative overflow-hidden bg-[#030014]">
+    // AJUSTE COR: Alterado de #030014 para #020617 (Removendo o roxo)
+    <section id="faq" className="py-24 relative overflow-hidden bg-[#020617]">
       <div className="absolute top-1/2 right-0 w-[600px] h-[600px] bg-blue-900/10 blur-[120px] -z-10 rounded-full"></div>
 
       <div className="container mx-auto px-6">
@@ -747,17 +747,15 @@ const Footer = () => {
 
 function App() {
   return (
-    <div className="relative w-full min-h-screen text-white selection:bg-cyan-500 selection:text-black bg-[#02000d]">
+    <div className="bg-[#02000d] min-h-screen text-white selection:bg-cyan-500/30 selection:text-cyan-200 font-sans">
       <StarField />
       <Navbar />
-      <main>
-        <Hero />
-        <About />
-        <MotionShowcase />
-        <Services />
-        <ClientFeedback />
-        <FAQ />
-      </main>
+      <Hero />
+      <About />
+      <MotionShowcase />
+      <ClientFeedback />
+      <Services />
+      <FAQ />
       <Footer />
     </div>
   );
