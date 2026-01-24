@@ -5,7 +5,6 @@ import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
 // --- IMPORTS DE ASSETS ---
-// Certifique-se de que os arquivos existem nestes caminhos dentro de src/assets/
 import logo from './assets/logo.png';
 import aboutImage from './assets/about.jpeg';
 
@@ -26,6 +25,32 @@ import agencyVideo1 from './assets/videos/agency/agency1.mp4';
 import agencyVideo2 from './assets/videos/agency/agency2.mp4';
 import agencyVideo3 from './assets/videos/agency/agency3.mp4';
 
+// --- META PIXEL INTEGRATION ---
+const META_PIXEL_ID = '837801989002547';
+
+// Initialize Meta Pixel
+const initializeMetaPixel = () => {
+  if (typeof window === 'undefined' || window.fbq) return;
+
+  !function(f,b,e,v,n,t,s){
+    if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s);
+  }(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+
+  window.fbq('init', META_PIXEL_ID);
+  window.fbq('track', 'PageView');
+};
+
+// Meta Pixel event tracking helper
+const trackMetaEvent = (eventName, eventData = {}) => {
+  if (typeof window !== 'undefined' && window.fbq) {
+    window.fbq('track', eventName, eventData);
+  }
+};
 
 // --- UTILS ---
 function cn(...inputs) {
@@ -41,10 +66,17 @@ const getWhatsAppLink = () => {
 
 // --- COMPONENTS ---
 
-const MagicButton = ({ children, className, onClick, variant = 'primary' }) => {
+const MagicButton = ({ children, className, onClick, variant = 'primary', eventName = null, eventData = {} }) => {
+  const handleClick = (e) => {
+    if (eventName) {
+      trackMetaEvent(eventName, eventData);
+    }
+    if (onClick) onClick(e);
+  };
+
   return (
     <button
-      onClick={onClick}
+      onClick={handleClick}
       className={cn(
         "relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-slate-50",
         className
@@ -203,10 +235,17 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const handleWhatsAppClick = () => {
+    trackMetaEvent('Contact', {
+      content_name: 'Navbar WhatsApp Click',
+      content_category: 'Contact'
+    });
+    window.open(getWhatsAppLink(), '_blank');
+  };
+
   return (
     <nav className={cn(
       "fixed top-0 w-full z-50 transition-all duration-300 border-b border-transparent",
-      // AJUSTE COR: Removido #030014 (roxo) para #020617 (slate/blue)
       scrolled ? "bg-[#020617]/80 backdrop-blur-md border-cyan-900/20 py-4" : "bg-transparent py-6"
     )}>
       <div className="container mx-auto px-6 flex justify-between items-center">
@@ -228,7 +267,7 @@ const Navbar = () => {
         </div>
 
         <button
-          onClick={() => window.open(getWhatsAppLink(), '_blank')}
+          onClick={handleWhatsAppClick}
           className="px-5 py-2 rounded-full border border-cyan-500/20 text-xs font-semibold hover:bg-cyan-500/10 hover:border-cyan-500/50 transition-all text-white shadow-[0_0_15px_rgba(6,182,212,0.15)]"
         >
           Fale Conosco
@@ -246,6 +285,14 @@ const Hero = () => {
     }
   };
 
+  const handleWhatsAppClick = () => {
+    trackMetaEvent('InitiateCheckout', {
+      content_name: 'Hero Iniciar Projeto',
+      content_category: 'Lead'
+    });
+    window.open(getWhatsAppLink(), '_blank');
+  };
+
   return (
     <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
       <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-600/20 rounded-full blur-[120px] -z-10 animate-pulse-glow" />
@@ -257,7 +304,6 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          {/* Badge Azul com Glow */}
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-cyan-500/30 bg-cyan-950/30 backdrop-blur-sm mb-8 shadow-[0_0_20px_rgba(6,182,212,0.15)]">
             <span className="relative flex h-2.5 w-2.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
@@ -278,7 +324,12 @@ const Hero = () => {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
             <MagicButton
               className="w-full sm:w-auto"
-              onClick={() => window.open(getWhatsAppLink(), '_blank')}
+              onClick={handleWhatsAppClick}
+              eventName="InitiateCheckout"
+              eventData={{
+                content_name: 'Hero Iniciar Projeto Button',
+                content_category: 'Lead'
+              }}
             >
               <span className="flex items-center gap-2">
                 Iniciar Projeto <ArrowRight size={16} />
@@ -320,7 +371,6 @@ const About = () => {
             viewport={{ once: true }}
             className="relative"
           >
-            {/* Imagem Substituída por Placeholder Estilizado */}
             <div className="relative aspect-[4/5] rounded-2xl overflow-hidden border border-white/10 group">
               <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 to-black/80 z-0"></div>
 
@@ -428,7 +478,6 @@ const MotionShowcase = () => {
           </div>
         </div>
 
-        {/* Grid responsivo: 2 Colunas em telas médias para vídeos maiores */}
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 max-w-7xl mx-auto">
           <AnimatePresence mode='wait'>
             {motions[activeTab] ? motions[activeTab].map((item, index) => (
@@ -438,7 +487,6 @@ const MotionShowcase = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.3, delay: index * 0.1 }}
-                // AJUSTE VIDEO: Adicionado bg-black para evitar fundo roxo/estranho no letterbox
                 className="group relative aspect-video rounded-2xl overflow-hidden border border-white/10 bg-black shadow-2xl hover:border-cyan-500/30 transition-colors"
               >
                 <video
@@ -487,8 +535,15 @@ const ClientFeedback = () => {
     }
   ];
 
+  const handleWhatsAppClick = () => {
+    trackMetaEvent('Lead', {
+      content_name: 'Client Feedback Quero Resultados',
+      content_category: 'Conversion'
+    });
+    window.open(getWhatsAppLink(), '_blank');
+  };
+
   return (
-    // AJUSTE COR: Alterado o gradient final para #0f172a para evitar tom roxo
     <section id="feedbacks" className="py-24 bg-gradient-to-b from-[#02000d] to-[#0f172a]">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
@@ -527,7 +582,14 @@ const ClientFeedback = () => {
           viewport={{ once: true }}
           className="text-center mt-16"
         >
-          <MagicButton onClick={() => window.open(getWhatsAppLink(), '_blank')}>
+          <MagicButton 
+            onClick={handleWhatsAppClick}
+            eventName="Lead"
+            eventData={{
+              content_name: 'Client Feedback Button',
+              content_category: 'Conversion'
+            }}
+          >
             <span className="flex items-center gap-2">
               Quero resultados também <ArrowRight size={16} />
             </span>
@@ -567,7 +629,6 @@ const Services = () => {
   ];
 
   return (
-    // AJUSTE COR: Alterado de #030014 para #020617 (slate escuro/preto)
     <section id="servicos" className="py-24 relative overflow-hidden bg-[#020617]">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-cyan-600/5 blur-[100px] -z-10 rounded-full"></div>
 
@@ -647,8 +708,15 @@ const FAQ = () => {
     }
   ];
 
+  const handleWhatsAppClick = () => {
+    trackMetaEvent('Contact', {
+      content_name: 'FAQ Falar no WhatsApp',
+      content_category: 'Contact'
+    });
+    window.open(getWhatsAppLink(), '_blank');
+  };
+
   return (
-    // AJUSTE COR: Alterado de #030014 para #020617 (Removendo o roxo)
     <section id="faq" className="py-24 relative overflow-hidden bg-[#020617]">
       <div className="absolute top-1/2 right-0 w-[600px] h-[600px] bg-blue-900/10 blur-[120px] -z-10 rounded-full"></div>
 
@@ -719,7 +787,14 @@ const FAQ = () => {
           className="text-center mt-16"
         >
           <p className="text-gray-400 mb-6">Ainda tem dúvidas? Fale diretamente com nossa equipe.</p>
-          <MagicButton onClick={() => window.open(getWhatsAppLink(), '_blank')}>
+          <MagicButton 
+            onClick={handleWhatsAppClick}
+            eventName="Contact"
+            eventData={{
+              content_name: 'FAQ Falar no WhatsApp Button',
+              content_category: 'Contact'
+            }}
+          >
             <span className="flex items-center gap-2">
               Falar no WhatsApp <ArrowRight size={16} />
             </span>
@@ -746,6 +821,14 @@ const Footer = () => {
 };
 
 function App() {
+  // Initialize Meta Pixel
+  useEffect(() => {
+    initializeMetaPixel();
+    
+    // Track page view for SPA
+    trackMetaEvent('PageView');
+  }, []);
+
   return (
     <div className="bg-[#02000d] min-h-screen text-white selection:bg-cyan-500/30 selection:text-cyan-200 font-sans">
       <StarField />
