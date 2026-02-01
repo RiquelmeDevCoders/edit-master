@@ -4,11 +4,9 @@ import { Play, ArrowRight, CheckCircle2, Zap, Layers, ChevronDown, Volume2, Paus
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
-// --- IMPORTS DE ASSETS ---
 import logo from './assets/logo.png';
 import aboutImage from './assets/about.jpeg';
 
-// Vídeos
 import saasVideo1 from './assets/videos/saas/video1.mp4';
 import saasVideo2 from './assets/videos/saas/video2.mp4';
 import saasVideo3 from './assets/videos/saas/video3.mp4';
@@ -24,11 +22,15 @@ import infoprodutoVideo3 from './assets/videos/infoproduto/infoproduto3.mp4';
 import agencyVideo1 from './assets/videos/agency/agency1.mp4';
 import agencyVideo2 from './assets/videos/agency/agency2.mp4';
 import agencyVideo3 from './assets/videos/agency/agency3.mp4';
+import designImage1 from './assets/design/design1.jpg';
+import designImage2 from './assets/design/design2.jpg';
+import designImage3 from './assets/design/design3.jpg';
+import designImage4 from './assets/design/design4.jpg';
+import designImage5 from './assets/design/design5.jpg';
+import designImage6 from './assets/design/design6.jpg';
 
-// --- META PIXEL INTEGRATION ---
 const META_PIXEL_ID = '837801989002547';
 
-// Initialize Meta Pixel
 const initializeMetaPixel = () => {
   if (typeof window === 'undefined' || window.fbq) return;
 
@@ -45,26 +47,21 @@ const initializeMetaPixel = () => {
   window.fbq('track', 'PageView');
 };
 
-// Meta Pixel event tracking helper
 const trackMetaEvent = (eventName, eventData = {}) => {
   if (typeof window !== 'undefined' && window.fbq) {
     window.fbq('track', eventName, eventData);
   }
 };
 
-// --- UTILS ---
 function cn(...inputs) {
   return twMerge(clsx(inputs));
 }
 
-// WhatsApp Link Generator
 const getWhatsAppLink = () => {
   const phone = "5584999924496";
   const message = encodeURIComponent("Vim pelo site da Edit Master! Gostaria de saber mais sobre a produção de conteúdo estratégico.");
   return `https://wa.me/${phone}?text=${message}`;
 };
-
-// --- COMPONENTS ---
 
 const MagicButton = ({ children, className, onClick, variant = 'primary', eventName = null, eventData = {} }) => {
   const handleClick = (e) => {
@@ -152,7 +149,6 @@ const StarField = () => {
   return <canvas ref={canvasRef} className="fixed inset-0 z-0 pointer-events-none opacity-40" />;
 };
 
-// --- COMPONENTE DE ÁUDIO ---
 const AudioPlayer = ({ name, role, quote, src }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(null);
@@ -223,8 +219,6 @@ const AudioPlayer = ({ name, role, quote, src }) => {
     </div>
   );
 };
-
-// --- SECTIONS ---
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -504,6 +498,41 @@ const MotionShowcase = () => {
               </motion.div>
             )) : null}
           </AnimatePresence>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const DesignShowcase = () => {
+  const designImages = [
+    designImage1,
+    designImage2,
+    designImage3,
+    designImage4,
+    designImage5,
+    designImage6
+  ];
+
+  return (
+    <section className="py-24 bg-[#02000d]">
+      <div className="container mx-auto px-6">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Conteúdo Visual Estratégico</h2>
+          <p className="text-gray-400 max-w-2xl mx-auto">
+            Design em imagem focado em branding e posicionamento de marca
+          </p>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          {designImages.map((img, idx) => (
+            <div key={idx} className="relative aspect-square rounded-2xl overflow-hidden border border-white/10 bg-black">
+              <img
+                src={img}
+                alt={`Design estratégico ${idx + 1}`}
+                className="w-full h-full object-contain"
+              />
+            </div>
+          ))}
         </div>
       </div>
     </section>
@@ -821,11 +850,9 @@ const Footer = () => {
 };
 
 function App() {
-  // Initialize Meta Pixel
   useEffect(() => {
     initializeMetaPixel();
     
-    // Track page view for SPA
     trackMetaEvent('PageView');
   }, []);
 
@@ -836,6 +863,7 @@ function App() {
       <Hero />
       <About />
       <MotionShowcase />
+      <DesignShowcase />
       <ClientFeedback />
       <Services />
       <FAQ />
