@@ -28,20 +28,24 @@ import designImage3 from './assets/design/design3.jpg';
 import designImage4 from './assets/design/design4.jpg';
 import designImage5 from './assets/design/design5.jpg';
 import designImage6 from './assets/design/design6.jpg';
+import logo1 from './assets/design/sharkpay-logo.png';
+import logo2 from './assets/design/rapidyn-logo.png';
 
 const META_PIXEL_ID = '837801989002547';
 
 const initializeMetaPixel = () => {
   if (typeof window === 'undefined' || window.fbq) return;
 
-  !function(f,b,e,v,n,t,s){
-    if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s);
-  }(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  !function (f, b, e, v, n, t, s) {
+    if (f.fbq) return; n = f.fbq = function () {
+      n.callMethod ?
+        n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+    };
+    if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+    n.queue = []; t = b.createElement(e); t.async = !0;
+    t.src = v; s = b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t, s);
+  }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
 
   window.fbq('init', META_PIXEL_ID);
   window.fbq('track', 'PageView');
@@ -516,23 +520,67 @@ const DesignShowcase = () => {
 
   return (
     <section className="py-24 bg-[#02000d]">
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-4 sm:px-6">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Conteúdo Visual Estratégico</h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
-            Design em imagem focado em branding e posicionamento de marca
+            Design em imagem focado em branding e posicionamento de marca.
           </p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {designImages.map((img, idx) => (
-            <div key={idx} className="relative aspect-square rounded-2xl overflow-hidden border border-white/10 bg-black">
-              <img
-                src={img}
-                alt={`Design estratégico ${idx + 1}`}
-                className="w-full h-full object-contain"
-              />
+
+        <div className="max-w-6xl mx-auto space-y-20">
+          <div>
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 md:gap-8 mb-8">
+              <div className="lg:col-span-3 grid grid-cols-1 sm:grid-cols-3 gap-6">
+                {designImages.slice(0, 3).map((img, idx) => (
+                  <div key={idx} className="relative aspect-square rounded-2xl overflow-hidden">
+                    <img
+                      src={img}
+                      alt={`Design estratégico ${idx + 1}`}
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
+                ))}
+              </div>
+              <div className="flex items-center justify-center">
+                <img
+                  src={logo1}
+                  alt="Logo Sharkpay"
+                  className="w-full h-full object-contain"
+                />
+              </div>
             </div>
-          ))}
+            <p className="text-gray-400 text-center max-w-3xl mx-auto">
+              A Shake Pay confiou à Edit Master o posicionamento estratégico da sua marca no Instagram.
+              Desenvolvemos conteúdos alinhados a branding, comunicação e percepção de valor no mercado.
+            </p>
+          </div>
+
+          <div>
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 md:gap-8 mb-8">
+              <div className="lg:col-span-3 grid grid-cols-1 sm:grid-cols-3 gap-6">
+                {designImages.slice(3, 6).map((img, idx) => (
+                  <div key={idx + 3} className="relative aspect-square rounded-2xl overflow-hidden">
+                    <img
+                      src={img}
+                      alt={`Design estratégico ${idx + 4}`}
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
+                ))}
+              </div>
+              <div className="flex items-center justify-center">
+                <img
+                  src={logo2}
+                  alt="Logo Rapidyn"
+                  className="w-full h-full object-contain"
+                />
+              </div>
+            </div>
+            <p className="text-gray-400 text-center max-w-3xl mx-auto">
+              A Edit Master conduziu o posicionamento digital da Rapdyn, criando conteúdos alinhados a branding, estratégia e autoridade de marca.
+            </p>
+          </div>
         </div>
       </div>
     </section>
@@ -611,7 +659,7 @@ const ClientFeedback = () => {
           viewport={{ once: true }}
           className="text-center mt-16"
         >
-          <MagicButton 
+          <MagicButton
             onClick={handleWhatsAppClick}
             eventName="Lead"
             eventData={{
@@ -816,7 +864,7 @@ const FAQ = () => {
           className="text-center mt-16"
         >
           <p className="text-gray-400 mb-6">Ainda tem dúvidas? Fale diretamente com nossa equipe.</p>
-          <MagicButton 
+          <MagicButton
             onClick={handleWhatsAppClick}
             eventName="Contact"
             eventData={{
@@ -852,7 +900,7 @@ const Footer = () => {
 function App() {
   useEffect(() => {
     initializeMetaPixel();
-    
+
     trackMetaEvent('PageView');
   }, []);
 
