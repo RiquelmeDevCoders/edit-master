@@ -7,21 +7,21 @@ import { twMerge } from 'tailwind-merge';
 import logo from './assets/logo.png';
 import aboutImage from './assets/about.jpeg';
 
-import saasVideo1 from './assets/videos/saas/video1.mp4';
-import saasVideo2 from './assets/videos/saas/video2.mp4';
-import saasVideo3 from './assets/videos/saas/video3.mp4';
-import gatewayVideo1 from './assets/videos/gateway/video1.mp4';
-import gatewayVideo2 from './assets/videos/gateway/video2.mp4';
-import gatewayVideo3 from './assets/videos/gateway/video3.mp4';
-import appVideo1 from './assets/videos/app/app1.mp4';
-import appVideo2 from './assets/videos/app/app2.mp4';
-import appVideo3 from './assets/videos/app/app3.mp4';
-import infoprodutoVideo1 from './assets/videos/infoproduto/infoproduto1.mp4';
-import infoprodutoVideo2 from './assets/videos/infoproduto/infoproduto2.mp4';
-import infoprodutoVideo3 from './assets/videos/infoproduto/infoproduto3.mp4';
-import agencyVideo1 from './assets/videos/agency/agency1.mp4';
-import agencyVideo2 from './assets/videos/agency/agency2.mp4';
-import agencyVideo3 from './assets/videos/agency/agency3.mp4';
+const saasVideo1 = 'https://drive.google.com/file/d/1xJnTPr4hhU5xqCDBerM4Gm0kGw2gKJhr/preview';
+const saasVideo2 = 'https://drive.google.com/file/d/1PC_JfQJ1SBk3bH7h-8u9kMIGtVJjNBAF/preview';
+const saasVideo3 = 'https://drive.google.com/file/d/1YTo9oc4BsjWnwVZEPaOelXYl8X4f9v4O/preview';
+const gatewayVideo1 = 'https://drive.google.com/file/d/123zuhE3FhDJf5GjSxD9ER5norqZGxa1d/preview';
+const gatewayVideo2 = 'https://drive.google.com/file/d/17N0lQEqu6m2ssWJPP-5dIrMAZquPx9Zc/preview';
+const gatewayVideo3 = 'https://drive.google.com/file/d/1VKkM43PdsJAiBsPMgVEWY1bcyGm_NYlQ/preview';
+const appVideo1 = 'https://drive.google.com/file/d/1WYGfSkUxVqPqZlcJPNDQYWNJ_6pLvPPC/preview';
+const appVideo2 = 'https://drive.google.com/file/d/1vzdZYO0QRcmw4SuH0ju_pvhYXZpWPjUD/preview';
+const appVideo3 = 'https://drive.google.com/file/d/1i3RJHroZ17IIxB4Xv5_W6V_KlMcuLmTZ/preview';
+const infoprodutoVideo1 = 'https://drive.google.com/file/d/1S5hk6Rm_LxK1Oy9di-NoUtYys9IjSMPy/preview';
+const infoprodutoVideo2 = 'https://drive.google.com/file/d/1vow4LxthFNO0uux2irreFcsbDihOgJuG/preview';
+const infoprodutoVideo3 = 'https://drive.google.com/file/d/1vZeU_2glSNIGV7QYGv-b-zzjcWvZhbGS/preview';
+const agencyVideo1 = 'https://drive.google.com/file/d/1Uce5e1tVjZnTrkUzagb5axMBDLMm7yb6/preview';
+const agencyVideo2 = 'https://drive.google.com/file/d/1RwwFZqDz-QsiUmYW-YNj8cnU5-SdQlRi/preview';
+const agencyVideo3 = 'https://drive.google.com/file/d/1MmmNUH610nVg-FmWUi6-hsHXAj5nizP1/preview';
 import designImage1 from './assets/design/design1.jpg';
 import designImage2 from './assets/design/design2.jpg';
 import designImage3 from './assets/design/design3.jpg';
@@ -487,15 +487,12 @@ const MotionShowcase = () => {
                 transition={{ duration: 0.3, delay: index * 0.1 }}
                 className="group relative aspect-video rounded-2xl overflow-hidden border border-white/10 bg-black shadow-2xl hover:border-cyan-500/30 transition-colors"
               >
-                <video
+                <iframe
                   src={item.video}
-                  className="w-full h-full object-contain"
-                  controls
-                  playsInline
-                  preload="metadata"
-                >
-                  Seu navegador não suporta o elemento de vídeo.
-                </video>
+                  className="w-full h-full"
+                  allow="autoplay"
+                  allowFullScreen
+                />
                 <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/90 to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <h3 className="text-white font-medium text-lg">{item.title}</h3>
                 </div>
