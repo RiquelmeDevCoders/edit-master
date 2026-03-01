@@ -707,9 +707,9 @@ const Services = () => {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-cyan-600/5 blur-[100px] -z-10 rounded-full"></div>
 
       <div className="container mx-auto px-6">
-        <div className="mb-16">
+        <div className="mb-16 text-center">
           <h2 className="text-3xl md:text-5xl font-bold mb-6">O que a Edit Master entrega</h2>
-          <p className="text-xl text-gray-400 max-w-2xl">
+          <p className="text-xl text-gray-400 max-w-2xl mx-auto">
             Profissionais especializados e um processo criativo estruturado para produzir conteúdo de alta performance, pensado para percepção, posicionamento e conversão.
           </p>
         </div>
